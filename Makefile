@@ -117,7 +117,8 @@ ARCH =
 
 #### Toolchain options.
 # GCC is normally used both for compiling and linking.
-CC = gcc
+#CC = gcc
+CC=arm-brcm-linux-uclibcgnueabi-gcc
 LD = $(CC)
 
 #### Debug flags (typically "-g").
@@ -196,11 +197,14 @@ ARCH_FLAGS.i686   = -m32 -march=i686
 ARCH_FLAGS.x86_64 = -m64 -march=x86-64
 ARCH_FLAGS        = $(ARCH_FLAGS.$(ARCH))
 
+TOP=/projects/xwrt-vortex1/release/src/router
+CFLAGS_CUSTOM= -DSSL_INC=${TOP}/openssl/include -DSSL_LIB=${TOP}/openssl -DZLIB_INC=${TOP}/zlib -DZLIB_LIB=${TOP}/zlib 
+
 #### Common CFLAGS
 # These CFLAGS contain general optimization options, CPU-specific optimizations
 # and debug flags. They may be overridden by some distributions which prefer to
 # set all of them at once instead of playing with the CPU and DEBUG variables.
-CFLAGS = $(ARCH_FLAGS) $(CPU_CFLAGS) $(DEBUG_CFLAGS) $(SPEC_CFLAGS)
+CFLAGS = $(ARCH_FLAGS) $(CPU_CFLAGS) $(DEBUG_CFLAGS) $(SPEC_CFLAGS) $(CFLAGS_CUSTOM)
 
 #### Common LDFLAGS
 # These LDFLAGS are used as the first "ld" options, regardless of any library
